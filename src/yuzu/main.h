@@ -52,7 +52,7 @@ enum class ReinitializeKeyBehavior {
     Warning,
 };
 
-namespace DiscordRPC {
+namespace DiscordSDK {
 class DiscordInterface;
 }
 
@@ -76,7 +76,7 @@ public:
     GMainWindow();
     ~GMainWindow() override;
 
-    std::unique_ptr<DiscordRPC::DiscordInterface> discord_rpc;
+    std::unique_ptr<DiscordSDK::DiscordInterface> discord_sdk;
 
     bool DropAction(QDropEvent* event);
     void AcceptDropEvent(QDropEvent* event);

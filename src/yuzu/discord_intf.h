@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace DiscordRPC {
+namespace DiscordSDK {
 
 class DiscordInterface {
 public:
@@ -22,4 +22,4 @@ public:
     void Update() override {}
 };
 
-} // namespace DiscordRPC
+} // namespace DiscordSDK
