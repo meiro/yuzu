@@ -101,7 +101,7 @@ static FileSys::VirtualFile VfsDirectoryCreateFileWrapper(const FileSys::Virtual
 #include "yuzu/debugger/console.h"
 #include "yuzu/debugger/profiler.h"
 #include "yuzu/debugger/wait_tree.h"
-#include "yuzu/discord.h"
+#include "yuzu/discord_intf.h"
 #include "yuzu/game_list.h"
 #include "yuzu/game_list_p.h"
 #include "yuzu/hotkeys.h"
@@ -192,7 +192,7 @@ GMainWindow::GMainWindow()
     UpdateUITheme();
 
     SetDiscordEnabled(UISettings::values.enable_discord_presence);
-    discord_rpc->Update();
+    discord_sdk->Update();
 
     InitializeWidgets();
     InitializeDebugWidgets();
@@ -1034,9 +1034,17 @@ void GMainWindow::BootGame(const QString& filename) {
 }
 
 void GMainWindow::ShutdownGame() {
+    if (!emulation_running) {
+        return;
+    }
+
+    if (ui.action_Fullscreen->isChecked()) {
+        HideFullscreen();
+    }
+
     AllowOSSleep();
 
-    discord_rpc->Pause();
+    discord_sdk->Pause();
     emu_thread->RequestStop();
 
     emit EmulationStopping();
@@ -1045,7 +1053,7 @@ void GMainWindow::ShutdownGame() {
     emu_thread->wait();
     emu_thread = nullptr;
 
-    discord_rpc->Update();
+    discord_sdk->Update();
 
     // The emulation is stopped, so closing the window or not does not matter anymore
     disconnect(render_window, &GRenderWindow::Closed, this, &GMainWindow::OnStopGame);
@@ -1710,17 +1718,12 @@ void GMainWindow::OnStartGame() {
     ui.action_Restart->setEnabled(true);
     ui.action_Report_Compatibility->setEnabled(true);
 
-    discord_rpc->Update();
+    discord_sdk->Update();
     ui.action_Load_Amiibo->setEnabled(true);
     ui.action_Capture_Screenshot->setEnabled(true);
 }
 
 void GMainWindow::OnPauseGame() {
-    Core::System& system{Core::System::GetInstance()};
-    if (system.GetExitLock() && !ConfirmForceLockedExit()) {
-        return;
-    }
-
     emu_thread->SetRunning(false);
 
     ui.action_Start->setEnabled(true);
@@ -1803,7 +1806,7 @@ void GMainWindow::ToggleWindowMode() {
         // Render in the main window...
         render_window->BackupGeometry();
         ui.horizontalLayout->addWidget(render_window);
-        render_window->setFocusPolicy(Qt::ClickFocus);
+        render_window->setFocusPolicy(Qt::StrongFocus);
         if (emulation_running) {
             render_window->setVisible(true);
             render_window->setFocus();
@@ -1981,6 +1984,10 @@ void GMainWindow::UpdateStatusBar() {
     emu_speed_label->setVisible(true);
     game_fps_label->setVisible(true);
     emu_frametime_label->setVisible(true);
+}
+
+void GMainWindow::DiscordTick() {
+    discord_sdk->Tick();
 }
 
 void GMainWindow::OnCoreError(Core::System::ResultStatus result, std::string details) {
@@ -2342,14 +2349,18 @@ void GMainWindow::UpdateUITheme() {
 void GMainWindow::SetDiscordEnabled([[maybe_unused]] bool state) {
 #ifdef USE_DISCORD_PRESENCE
     if (state) {
-        discord_rpc = std::make_unique<DiscordRPC::DiscordImpl>();
+        discord_sdk = std::make_unique<DiscordSDK::DiscordImpl>();
+        QObject::connect(&discord_callback_tick_timer, &QTimer::timeout, this,
+                &GMainWindow::DiscordTick);
+        discord_callback_tick_timer.start(1000);
     } else {
-        discord_rpc = std::make_unique<DiscordRPC::NullImpl>();
+        discord_callback_tick_timer.stop();
+        discord_sdk = std::make_unique<DiscordSDK::NullImpl>();
     }
 #else
-    discord_rpc = std::make_unique<DiscordRPC::NullImpl>();
+    discord_sdk = std::make_unique<DiscordSDK::NullImpl>();
 #endif
-    discord_rpc->Update();
+    discord_sdk->Update();
 }
 
 #ifdef main

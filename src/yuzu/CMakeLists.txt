@@ -87,7 +87,6 @@ add_executable(yuzu
     debugger/profiler.h
     debugger/wait_tree.cpp
     debugger/wait_tree.h
-    discord.h
     game_list.cpp
     game_list.h
     game_list_p.h
@@ -178,7 +177,7 @@ if (USE_DISCORD_PRESENCE)
         discord_impl.cpp
         discord_impl.h
     )
-    target_link_libraries(yuzu PRIVATE discord-rpc)
+    target_link_libraries(yuzu PRIVATE discord_game_sdk_st)
     target_compile_definitions(yuzu PRIVATE -DUSE_DISCORD_PRESENCE)
 endif()
 

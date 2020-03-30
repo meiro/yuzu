@@ -63,10 +63,10 @@ if(ENABLE_CUBEB)
     add_subdirectory(cubeb EXCLUDE_FROM_ALL)
 endif()
 
-# DiscordRPC
+# DiscordSDK
 if (USE_DISCORD_PRESENCE)
-    add_subdirectory(discord-rpc EXCLUDE_FROM_ALL)
-    target_include_directories(discord-rpc INTERFACE ./discord-rpc/include)
+    add_subdirectory(discord_game_sdk EXLUDE_FROM_ALL)
+    target_include_directories(discord_game_sdk INTERFACE ./discord_game_sdk/cpp)
 endif()
 
 # Sirit

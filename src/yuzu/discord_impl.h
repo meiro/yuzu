@@ -4,17 +4,21 @@
 
 #pragma once
 
-#include "yuzu/discord.h"
+#include <discord.h>
+#include "yuzu/discord_intf.h"
 
-namespace DiscordRPC {
+namespace DiscordSDK {
 
 class DiscordImpl : public DiscordInterface {
+private:
+    discord::Core* core;
 public:
     DiscordImpl();
     ~DiscordImpl() override;
 
     void Pause() override;
     void Update() override;
+    void Tick() override;
 };
 
-} // namespace DiscordRPC
+} // namespace DiscordSDK

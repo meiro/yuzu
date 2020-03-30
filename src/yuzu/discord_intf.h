@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace DiscordRPC {
+namespace DiscordSDK {
 
 class DiscordInterface {
 public:
@@ -12,6 +12,7 @@ public:
 
     virtual void Pause() = 0;
     virtual void Update() = 0;
+    virtual void Tick() = 0;
 };
 
 class NullImpl : public DiscordInterface {
@@ -20,6 +21,7 @@ public:
 
     void Pause() override {}
     void Update() override {}
+    void Tick() override {};
 };
 
-} // namespace DiscordRPC
+} // namespace DiscordSDK
