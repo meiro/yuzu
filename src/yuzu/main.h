@@ -217,6 +217,7 @@ private slots:
 private:
     std::optional<u64> SelectRomFSDumpTarget(const FileSys::ContentProvider&, u64 program_id);
     void UpdateWindowTitle(const QString& title_name = {});
+    void DiscordTick();
     void UpdateStatusBar();
 
     Ui::MainWindow ui;
@@ -236,6 +237,7 @@ private:
     QPushButton* renderer_status_button = nullptr;
     QPushButton* dock_status_button = nullptr;
     QTimer status_bar_update_timer;
+    QTimer discord_callback_tick_timer;
 
     std::unique_ptr<Config> config;
 

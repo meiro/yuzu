@@ -1,14 +1,19 @@
 
 project(discord_game_sdk)
 
-set(DISCORD_PREFIX "/home/roman/proj/yuzu/mr/discord/yuzu/externals/discord_game_sdk")
-set(DISCORD_INCLUDE_DIR "${DISCORD_PREFIX}/cpp")
-set(DISCORD_LIBRARY_DIR "${DISCORD_PREFIX}/lib/x86_64")
-if (UNIX) 
+
+
+if (UNIX)
+	set(DISCORD_PREFIX "/home/roman/proj/yuzu/mr/discord/yuzu/externals/discord_game_sdk")
+	set(DISCORD_INCLUDE_DIR "${DISCORD_PREFIX}/cpp")
+	set(DISCORD_LIBRARY_DIR "${DISCORD_PREFIX}/lib/x86_64")
     set(DISCORD_LIBRARY "${DISCORD_LIBRARY_DIR}/libdiscord_game_sdk.so")
 endif (UNIX)
 if (WIN32)
-    set(DISCORD_LIBRARY "${DISCORD_LIBRARY_DIR}/libdiscord_game_sdk.dll")
+	set(DISCORD_PREFIX "C:/Users/Roman/Documents/GitHub/yuzu/externals/discord_game_sdk")
+	set(DISCORD_INCLUDE_DIR "${DISCORD_PREFIX}/cpp")
+	set(DISCORD_LIBRARY_DIR "${DISCORD_PREFIX}/lib/x86_64")
+    set(DISCORD_LIBRARY "${DISCORD_LIBRARY_DIR}/discord_game_sdk.dll.lib")
 endif (WIN32)
 
 #$link_directories("${DISCORD_PREFIX}/lib/x86_64/")

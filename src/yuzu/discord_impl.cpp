@@ -36,6 +36,10 @@ void DiscordImpl::Pause() {
     });
 }
 
+void DiscordImpl::Tick() {
+    core->RunCallbacks();
+}
+
 void DiscordImpl::Update() {
     s64 start_time = std::chrono::duration_cast<std::chrono::seconds>(
                          std::chrono::system_clock::now().time_since_epoch())
@@ -48,7 +52,7 @@ void DiscordImpl::Update() {
     discord::ActivityAssets &assets = activity.GetAssets();
     discord::ActivityTimestamps &timestamps = activity.GetTimestamps();
 
-    activity.GetAssets().SetLargeImage("yuzu_logo");
+    activity.GetAssets().SetLargeImage("logo");
     activity.GetAssets().SetLargeText("yuzu is an emulator for the Nintendo Switch");
     if (Core::System::GetInstance().IsPoweredOn()) {
         activity.SetState(title.c_str());

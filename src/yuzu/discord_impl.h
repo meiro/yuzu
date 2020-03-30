@@ -18,6 +18,7 @@ public:
 
     void Pause() override;
     void Update() override;
+    void Tick() override;
 };
 
 } // namespace DiscordSDK

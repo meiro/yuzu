@@ -1986,6 +1986,10 @@ void GMainWindow::UpdateStatusBar() {
     emu_frametime_label->setVisible(true);
 }
 
+void GMainWindow::DiscordTick() {
+    discord_sdk->Tick();
+}
+
 void GMainWindow::OnCoreError(Core::System::ResultStatus result, std::string details) {
     QMessageBox::StandardButton answer;
     QString status_message;
@@ -2346,7 +2350,11 @@ void GMainWindow::SetDiscordEnabled([[maybe_unused]] bool state) {
 #ifdef USE_DISCORD_PRESENCE
     if (state) {
         discord_sdk = std::make_unique<DiscordSDK::DiscordImpl>();
+        QObject::connect(&discord_callback_tick_timer, &QTimer::timeout, this,
+                &GMainWindow::DiscordTick);
+        discord_callback_tick_timer.start(1000);
     } else {
+        discord_callback_tick_timer.stop();
         discord_sdk = std::make_unique<DiscordSDK::NullImpl>();
     }
 #else
