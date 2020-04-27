@@ -163,7 +163,7 @@ cat > /tmp/org.yuzu.$REPO_NAME.json <<EOF
                 {
                     "type": "git",
                     "url": "https://github.com/yuzu-emu/$REPO_NAME.git",
-                    "branch": "$AZURE_BRANCH",
+                    "branch": "master",
                     "disable-shallow-clone": true
                 },
                 {
