@@ -44,6 +44,7 @@ sshfs "$FLATPAK_SSH_USER@$FLATPAK_SSH_HOSTNAME:$SSH_DIR" "$REPO_DIR" -C -p "$FLA
 chown -R yuzu "$HOME/.ccache"
 chmod -R 700 "$HOME/.ccache"
 mkdir -p "$STATE_DIR"
+chown -R yuzu "$STATE_DIR"
 chmod -R 700 "$STATE_DIR"
 ln -sv --force $HOME/.ccache "$STATE_DIR/ccache"
 
