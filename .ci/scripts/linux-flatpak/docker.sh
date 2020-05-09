@@ -42,7 +42,8 @@ mkdir -p "$STATE_DIR"
 ln -sv --force $HOME/.ccache "$STATE_DIR/ccache"
 
 # Set permissions to /yuzu
-chmod -R 700 /yuzu
+chmod -R 700 $YUZU_SRC_DIR
+chmod -R 700 "$STATE_DIR/ccache"
 
 # Build the yuzu flatpak
 flatpak-builder -v --jobs=4 --ccache --force-clean --state-dir="$STATE_DIR" --gpg-sign="$FLATPAK_GPG_PUBLIC_KEY" --repo="$REPO_DIR" "$BUILD_DIR" "/tmp/org.yuzu.$REPO_NAME.json"
