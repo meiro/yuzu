@@ -38,11 +38,12 @@ sshfs "$FLATPAK_SSH_USER@$FLATPAK_SSH_HOSTNAME:$SSH_DIR" "$REPO_DIR" -C -p "$FLA
 
 # Set permissions
 chmod -R 700 "$YUZU_SRC_DIR"
-chmod -R 700 "$HOME/.ccache"
 
 # setup ccache location
+chown -R yuzu "$HOME/.ccache"
+chmod -R 700 "$HOME/.ccache"
 mkdir -p "$STATE_DIR"
-chmod 700 "$STATE_DIR"
+chmod -R 700 "$STATE_DIR"
 ln -sv --force $HOME/.ccache "$STATE_DIR/ccache"
 
 # Set ccache permissions
