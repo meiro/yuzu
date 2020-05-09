@@ -39,7 +39,7 @@ sshfs "$FLATPAK_SSH_USER@$FLATPAK_SSH_HOSTNAME:$SSH_DIR" "$REPO_DIR" -C -p "$FLA
 
 # setup ccache location
 mkdir -p "$STATE_DIR"
-ln -sv --force /root/.ccache "$STATE_DIR/ccache"
+ln -sv --force $HOME/.ccache "$STATE_DIR/ccache"
 
 # Build the yuzu flatpak
 flatpak-builder -v --jobs=4 --ccache --force-clean --state-dir="$STATE_DIR" --gpg-sign="$FLATPAK_GPG_PUBLIC_KEY" --repo="$REPO_DIR" "$BUILD_DIR" "/tmp/org.yuzu.$REPO_NAME.json"
