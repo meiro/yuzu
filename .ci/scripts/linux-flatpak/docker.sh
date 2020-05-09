@@ -36,13 +36,15 @@ gpg2 --import "$GPG_KEY"
 mkdir -p "$REPO_DIR"
 sshfs "$FLATPAK_SSH_USER@$FLATPAK_SSH_HOSTNAME:$SSH_DIR" "$REPO_DIR" -C -p "$FLATPAK_SSH_PORT" -o IdentityFile="$SSH_KEY" -o ServerAliveInterval=60 -o "reconnect" -o auto_cache -o no_readahead
 
+# Set permissions
+chmod -R 700 $YUZU_SRC_DIR
+chmod -R 700 $HOME/.ccache
 
 # setup ccache location
 mkdir -p "$STATE_DIR"
 ln -sv --force $HOME/.ccache "$STATE_DIR/ccache"
 
-# Set permissions to /yuzu
-chmod -R 700 $YUZU_SRC_DIR
+# Set ccache permissions
 chmod -R 700 "$STATE_DIR/ccache"
 
 # Build the yuzu flatpak
