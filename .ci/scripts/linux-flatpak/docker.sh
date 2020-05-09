@@ -20,8 +20,6 @@ tar -C /tmp -xvf $KEYS_ARCHIVE
 
 # Configure SSH keys
 eval "$(ssh-agent -s)"
-mkdir "$HOME/.ssh"
-touch "$HOME/.ssh/known_hosts"
 chmod -R 600 "$HOME/.ssh"
 chown -R yuzu "$HOME/.ssh"
 chmod 600 "$SSH_KEY"
