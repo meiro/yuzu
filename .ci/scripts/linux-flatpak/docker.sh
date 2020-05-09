@@ -30,15 +30,15 @@ echo "[$FLATPAK_SSH_HOSTNAME]:$FLATPAK_SSH_PORT,[$(dig +short $FLATPAK_SSH_HOSTN
 # Configure GPG keys
 gpg2 --import "$GPG_KEY"
 
+# Set permissions
+chown -R yuzu "$YUZU_SRC_DIR"
+chmod -R 700 "$YUZU_SRC_DIR"
+
 # Mount our flatpak repository
 # -o reconnect and -o ServerAliveInterval ensure that 
 # the share stays active during long flatpak builds
 mkdir -p "$REPO_DIR"
 sshfs "$FLATPAK_SSH_USER@$FLATPAK_SSH_HOSTNAME:$SSH_DIR" "$REPO_DIR" -C -p "$FLATPAK_SSH_PORT" -o IdentityFile="$SSH_KEY" -o ServerAliveInterval=60 -o "reconnect" -o auto_cache -o no_readahead
-
-# Set permissions
-chown -R yuzu "$YUZU_SRC_DIR"
-chmod -R 700 "$YUZU_SRC_DIR"
 
 # setup ccache location
 chown -R yuzu "$HOME/.ccache"
