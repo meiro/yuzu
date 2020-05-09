@@ -20,8 +20,8 @@ tar -C /tmp -xvf $KEYS_ARCHIVE
 
 # Configure SSH keys
 eval "$(ssh-agent -s)"
-chmod -R 600 "$HOME/.ssh"
 chown -R yuzu "$HOME/.ssh"
+chmod -R 600 "$HOME/.ssh/*"
 chmod 600 "$SSH_KEY"
 ssh-add "$SSH_KEY"
 echo "[$FLATPAK_SSH_HOSTNAME]:$FLATPAK_SSH_PORT,[$(dig +short $FLATPAK_SSH_HOSTNAME)]:$FLATPAK_SSH_PORT $FLATPAK_SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
