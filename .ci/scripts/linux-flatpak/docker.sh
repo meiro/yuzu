@@ -18,11 +18,13 @@ GPG_KEY="/tmp/gpg.key"
 openssl aes-256-cbc -K $FLATPAK_ENC_K -iv $FLATPAK_ENC_IV -in "$YUZU_SRC_DIR/keys.tar.enc" -out "$KEYS_ARCHIVE" -d
 tar -C /tmp -xvf $KEYS_ARCHIVE
 
+CURRENT_USER=$(whoami)
+
 # Configure SSH keys
 eval "$(ssh-agent -s)"
 mkdir "$HOME/.ssh"
 chmod -R 600 "$HOME/.ssh"
-chown -R yuzu "$HOME/.ssh"
+chown -R $CURRENT_USER "$HOME/.ssh"
 chmod 600 "$SSH_KEY"
 ssh-add "$SSH_KEY"
 echo "[$FLATPAK_SSH_HOSTNAME]:$FLATPAK_SSH_PORT,[$(dig +short $FLATPAK_SSH_HOSTNAME)]:$FLATPAK_SSH_PORT $FLATPAK_SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
