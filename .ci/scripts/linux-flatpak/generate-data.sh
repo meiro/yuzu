@@ -143,9 +143,19 @@ cat > /tmp/org.yuzu.$REPO_NAME.json <<EOF
       "sha256": "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406"
     },
     {
-      "type": "file",
-      "path": "boost-configure",
-      "dest-filename": "configure"
+        "type": "script",
+        "commands": [
+            "./bootstrap.sh \"\$@\"",
+            "",
+            "cat <<EOF >Makefile",
+            "all:",
+            "    ./b2 -j `nproc`",
+            "",
+            "install:",
+            "    ./b2 install",
+            "EOF"
+        ],
+        "dest-filename": "configure"
     }
   ]
 },
