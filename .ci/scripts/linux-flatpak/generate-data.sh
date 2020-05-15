@@ -146,16 +146,16 @@ cat > /tmp/org.yuzu.$REPO_NAME.json <<EOF
         "type": "script",
         "commands": [
             "./bootstrap.sh \"\$@\"",
-            "",
+            "  ",
             "cat <<EOF >Makefile",
             "all:",
-            "    ./b2 -j `nproc`",
-            "",
+            "		./b2 -j `nproc`",
+            "  ",
             "install:",
-            "    ./b2 install",
+            "		./b2 install",
             "EOF"
         ],
-        "dest-filename": "configure"
+        "dest-filename": "boost-configure"
     }
   ]
 },
