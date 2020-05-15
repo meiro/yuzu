@@ -131,31 +131,11 @@ cat > /tmp/org.yuzu.$REPO_NAME.json <<EOF
         ]
     },
     {
-  "name": "boost",
+  "name": "All the libraries",
   "config-opts": [],
-  "cleanup": [
-    "/lib/libboost_*.a"
-  ],
-  "sources": [
     {
-      "type": "archive",
-      "url": "https://downloads.sourceforge.net/project/boost/boost/1.69.0/boost_1_69_0.tar.bz2",
-      "sha256": "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406"
-    },
-    {
-        "type": "script",
-        "commands": [
-            "./bootstrap.sh \"\$@\"",
-            "  ",
-            "cat <<EOF >Makefile",
-            "all:",
-            "		./b2 -j `nproc`",
-            "  ",
-            "install:",
-            "		./b2 install",
-            "EOF"
-        ],
-        "dest-filename": "boost-configure"
+        "type": "dir",
+        "path": "/usr/lib/"
     }
   ]
 },
