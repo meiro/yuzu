@@ -130,6 +130,25 @@ cat > /tmp/org.yuzu.$REPO_NAME.json <<EOF
             "'*'"
         ]
     },
+    {
+  "name": "boost",
+  "config-opts": [],
+  "cleanup": [
+    "/lib/libboost_*.a"
+  ],
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://downloads.sourceforge.net/project/boost/boost/1.69.0/boost_1_69_0.tar.bz2",
+      "sha256": "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406"
+    },
+    {
+      "type": "file",
+      "path": "boost-configure",
+      "dest-filename": "configure"
+    }
+  ]
+},
         {
             "name": "yuzu",
             "buildsystem": "cmake-ninja",
