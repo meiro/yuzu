@@ -131,14 +131,11 @@ cat > /tmp/org.yuzu.$REPO_NAME.json <<EOF
         ]
     },
     {
-  "name": "All the libraries",
-  "config-opts": [],
-    {
+        "name": "All the libraries",
+        "config-opts": [],
         "type": "dir",
         "path": "/usr/lib/"
-    }
-  ]
-},
+    },
         {
             "name": "yuzu",
             "buildsystem": "cmake-ninja",
